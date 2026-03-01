@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sabor & Arte | Restaurante</title>
     <meta name="description" content="Restaurante Sabor & Arte - Gastronomia autoral com ingredientes selecionados. Reserve sua mesa.">
+    <meta name="theme-color" content="#D4A853">
+    <meta property="og:title" content="Sabor & Arte | Restaurante">
+    <meta property="og:description" content="Gastronomia autoral com ingredientes selecionados. Reserve sua mesa.">
+    <meta property="og:type" content="website">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -307,11 +311,25 @@
             from { opacity: 0; transform: translateY(25px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 0;
+            background: var(--primary);
+            color: var(--dark);
+            padding: 0.5rem 1rem;
+            z-index: 200;
+            font-size: 0.9rem;
+        }
+        .skip-link:focus { top: 0; }
     </style>
 </head>
 <body>
 
-<nav>
+<a href="#cardapio" class="skip-link">Pular para o conteúdo</a>
+
+<nav role="navigation" aria-label="Menu principal">
     <div class="logo">Sabor & Arte<small>Gastronomia</small></div>
     <ul class="nav-links" id="navLinks">
         <li><a href="#sobre">Sobre</a></li>
@@ -456,12 +474,12 @@
 <section id="reserva" class="reservation">
     <div class="section-title">
         <h2>Faça sua <strong>Reserva</strong></h2>
-        <p>Reserve sua mesa e garanta uma experiencia especial</p>
+        <p>Reserve sua mesa e garanta uma experiência especial</p>
     </div>
-    <form class="reservation-form" onsubmit="event.preventDefault(); alert('Reserva enviada com sucesso! Entraremos em contato em breve.');">
+    <form class="reservation-form" aria-label="Formulário de reserva" onsubmit="event.preventDefault(); alert('Reserva enviada com sucesso! Entraremos em contato em breve.');">
         <div class="form-group">
-            <label>Nome completo</label>
-            <input type="text" placeholder="Seu nome" required>
+            <label for="res-nome">Nome completo</label>
+            <input type="text" id="res-nome" placeholder="Seu nome" required>
         </div>
         <div class="form-group">
             <label>Telefone</label>
@@ -494,7 +512,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label>Ocasiao</label>
+            <label>Ocasião</label>
             <select>
                 <option value="">Selecione (opcional)</option>
                 <option>Jantar romântico</option>
@@ -515,7 +533,7 @@
 
 <footer>
     <p class="footer-info">Rua das Flores, 123 - Centro | Tel: (11) 99999-9999</p>
-    <p class="footer-info">Ter a Dom: 18h as 23h | Seg: Fechado</p>
+    <p class="footer-info">Ter a Dom: 18h às 23h | Seg: Fechado</p>
     <p class="footer-copy">&copy; 2026 Sabor & Arte Restaurante</p>
 </footer>
 
@@ -557,6 +575,11 @@
             e.preventDefault();
             document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
         });
+    });
+
+    // Set min date to today for date inputs
+    document.querySelectorAll('input[type="date"]').forEach(input => {
+        input.min = new Date().toISOString().split('T')[0];
     });
 
     const obs = new IntersectionObserver(entries => {
