@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sabor & Arte | Restaurante</title>
+    <meta name="description" content="Restaurante Sabor & Arte - Gastronomia autoral com ingredientes selecionados. Reserve sua mesa.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -59,6 +61,27 @@
             transition: all 0.3s;
         }
         .nav-cta:hover { background: var(--primary-dark); }
+
+        /* HAMBURGER */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: var(--white);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
         /* HERO */
         .hero {
@@ -262,7 +285,21 @@
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             .about { grid-template-columns: 1fr; gap: 2rem; }
-            .nav-links, .nav-cta { display: none; }
+            .hamburger { display: flex; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background: rgba(26,20,16,0.97);
+                padding: 1.5rem 2rem;
+                gap: 1.2rem;
+                border-bottom: 1px solid rgba(212,168,83,0.15);
+            }
+            .nav-links.open { display: flex; }
+            .nav-cta { display: none; }
             .reservation-form { grid-template-columns: 1fr; }
         }
 
@@ -276,23 +313,26 @@
 
 <nav>
     <div class="logo">Sabor & Arte<small>Gastronomia</small></div>
-    <ul class="nav-links">
+    <ul class="nav-links" id="navLinks">
         <li><a href="#sobre">Sobre</a></li>
-        <li><a href="#cardapio">Cardapio</a></li>
+        <li><a href="#cardapio">Cardápio</a></li>
         <li><a href="#galeria">Galeria</a></li>
         <li><a href="#reserva">Reservas</a></li>
     </ul>
     <a href="#reserva" class="nav-cta">Reservar Mesa</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
 </nav>
 
 <section class="hero">
     <div class="hero-content">
         <p class="hero-sub">Gastronomia Autoral</p>
-        <h1>Uma experiencia <strong>unica</strong> para o seu paladar</h1>
-        <p>Ingredientes selecionados, receitas autorais e um ambiente acolhedor. Venha viver momentos inesqueciveis.</p>
+        <h1>Uma experiência <strong>única</strong> para o seu paladar</h1>
+        <p>Ingredientes selecionados, receitas autorais e um ambiente acolhedor. Venha viver momentos inesquecíveis.</p>
         <div class="hero-btns">
             <a href="#reserva" class="btn btn-gold">Reservar Mesa</a>
-            <a href="#cardapio" class="btn btn-outline-light">Ver Cardapio</a>
+            <a href="#cardapio" class="btn btn-outline-light">Ver Cardápio</a>
         </div>
     </div>
 </section>
@@ -301,9 +341,9 @@
     <div class="about">
         <div class="about-img">&#127858;</div>
         <div class="about-text">
-            <h2>Uma historia de <strong>paixao</strong> pela gastronomia</h2>
-            <p>Desde 2015, o Sabor & Arte traz o melhor da culinaria contemporanea com raizes brasileiras. Cada prato e cuidadosamente elaborado pelo nosso chef para proporcionar uma experiencia gastronomica memoravel.</p>
-            <p>Nosso compromisso e com ingredientes frescos, fornecedores locais e a busca constante pela excelencia.</p>
+            <h2>Uma história de <strong>paixão</strong> pela gastronomia</h2>
+            <p>Desde 2015, o Sabor & Arte traz o melhor da culinária contemporânea com raízes brasileiras. Cada prato é cuidadosamente elaborado pelo nosso chef para proporcionar uma experiência gastronômica memorável.</p>
+            <p>Nosso compromisso é com ingredientes frescos, fornecedores locais e a busca constante pela excelência.</p>
             <div class="about-stats">
                 <div class="stat">
                     <div class="stat-num">8+</div>
@@ -315,7 +355,7 @@
                 </div>
                 <div class="stat">
                     <div class="stat-num">4.9</div>
-                    <div class="stat-label">Avaliacao</div>
+                    <div class="stat-label">Avaliação</div>
                 </div>
             </div>
         </div>
@@ -324,65 +364,86 @@
 
 <section id="cardapio" class="menu-section">
     <div class="section-title">
-        <h2>Nosso <strong>Cardapio</strong></h2>
-        <p>Selecao dos pratos mais pedidos</p>
+        <h2>Nosso <strong>Cardápio</strong></h2>
+        <p>Seleção dos pratos mais pedidos</p>
     </div>
     <div class="menu-tabs">
-        <div class="menu-tab active">Entradas</div>
-        <div class="menu-tab">Pratos Principais</div>
-        <div class="menu-tab">Sobremesas</div>
-        <div class="menu-tab">Bebidas</div>
+        <div class="menu-tab active" data-cat="entradas">Entradas</div>
+        <div class="menu-tab" data-cat="principais">Pratos Principais</div>
+        <div class="menu-tab" data-cat="sobremesas">Sobremesas</div>
+        <div class="menu-tab" data-cat="bebidas">Bebidas</div>
     </div>
-    <div class="menu-grid">
-        <div class="menu-item">
+    <div class="menu-grid" id="menuGrid">
+        <div class="menu-item" data-cat="entradas">
             <div class="menu-item-info">
                 <h3>Bruschetta Artesanal</h3>
-                <p>Tomate cereja, manjericao fresco e reduccao de balsamico</p>
+                <p>Tomate cereja, manjericão fresco e redução de balsâmico</p>
             </div>
             <div class="menu-item-price">R$ 32</div>
         </div>
-        <div class="menu-item">
+        <div class="menu-item" data-cat="entradas">
             <div class="menu-item-info">
                 <h3>Carpaccio de Mignon</h3>
-                <p>Com rucula, parmesao e molho mostarda e mel</p>
+                <p>Com rúcula, parmesão e molho mostarda e mel</p>
             </div>
             <div class="menu-item-price">R$ 45</div>
         </div>
-        <div class="menu-item">
+        <div class="menu-item" data-cat="principais">
             <div class="menu-item-info">
                 <h3>Risoto de Funghi</h3>
-                <p>Cogumelos frescos, parmesao e trufa negra</p>
+                <p>Cogumelos frescos, parmesão e trufa negra</p>
             </div>
             <div class="menu-item-price">R$ 68</div>
         </div>
-        <div class="menu-item">
+        <div class="menu-item" data-cat="principais">
             <div class="menu-item-info">
-                <h3>File ao Molho de Vinho</h3>
-                <p>Mignon grelhado com reduccao de Malbec e risoto</p>
+                <h3>Filé ao Molho de Vinho</h3>
+                <p>Mignon grelhado com redução de Malbec e risoto</p>
             </div>
             <div class="menu-item-price">R$ 89</div>
         </div>
-        <div class="menu-item">
+        <div class="menu-item" data-cat="principais">
             <div class="menu-item-info">
-                <h3>Salmao Grelhado</h3>
-                <p>Com legumes assados e molho de maracuja</p>
+                <h3>Salmão Grelhado</h3>
+                <p>Com legumes assados e molho de maracujá</p>
             </div>
             <div class="menu-item-price">R$ 78</div>
         </div>
-        <div class="menu-item">
+        <div class="menu-item" data-cat="sobremesas">
             <div class="menu-item-info">
-                <h3>Petit Gateau</h3>
+                <h3>Petit Gâteau</h3>
                 <p>Com sorvete artesanal de baunilha e calda de frutas</p>
             </div>
             <div class="menu-item-price">R$ 38</div>
+        </div>
+        <div class="menu-item" data-cat="sobremesas">
+            <div class="menu-item-info">
+                <h3>Tiramisù</h3>
+                <p>Receita italiana clássica com café espresso e mascarpone</p>
+            </div>
+            <div class="menu-item-price">R$ 35</div>
+        </div>
+        <div class="menu-item" data-cat="bebidas">
+            <div class="menu-item-info">
+                <h3>Vinho da Casa</h3>
+                <p>Taça de vinho tinto ou branco selecionado pelo sommelier</p>
+            </div>
+            <div class="menu-item-price">R$ 28</div>
+        </div>
+        <div class="menu-item" data-cat="bebidas">
+            <div class="menu-item-info">
+                <h3>Drink Autoral</h3>
+                <p>Coquetel exclusivo com frutas da estação</p>
+            </div>
+            <div class="menu-item-price">R$ 32</div>
         </div>
     </div>
 </section>
 
 <section id="galeria" class="gallery">
     <div class="section-title">
-        <h2>Nosso <strong>Espaco</strong></h2>
-        <p>Ambiente pensado para cada detalhe da sua experiencia</p>
+        <h2>Nosso <strong>Espaço</strong></h2>
+        <p>Ambiente pensado para cada detalhe da sua experiência</p>
     </div>
     <div class="gallery-grid">
         <div class="gallery-item g1">&#127860;</div>
@@ -394,7 +455,7 @@
 
 <section id="reserva" class="reservation">
     <div class="section-title">
-        <h2>Faca sua <strong>Reserva</strong></h2>
+        <h2>Faça sua <strong>Reserva</strong></h2>
         <p>Reserve sua mesa e garanta uma experiencia especial</p>
     </div>
     <form class="reservation-form" onsubmit="event.preventDefault(); alert('Reserva enviada com sucesso! Entraremos em contato em breve.');">
@@ -411,7 +472,7 @@
             <input type="date" required>
         </div>
         <div class="form-group">
-            <label>Horario</label>
+            <label>Horário</label>
             <select required>
                 <option value="">Selecione</option>
                 <option>18:00</option>
@@ -422,7 +483,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label>Numero de pessoas</label>
+            <label>Número de pessoas</label>
             <select required>
                 <option value="">Selecione</option>
                 <option>1 pessoa</option>
@@ -436,15 +497,15 @@
             <label>Ocasiao</label>
             <select>
                 <option value="">Selecione (opcional)</option>
-                <option>Jantar romantico</option>
-                <option>Aniversario</option>
-                <option>Reuniao de negocios</option>
-                <option>Confraternizacao</option>
+                <option>Jantar romântico</option>
+                <option>Aniversário</option>
+                <option>Reunião de negócios</option>
+                <option>Confraternização</option>
             </select>
         </div>
         <div class="form-group full">
-            <label>Observacoes</label>
-            <textarea placeholder="Alguma restricao alimentar ou pedido especial?"></textarea>
+            <label>Observações</label>
+            <textarea placeholder="Alguma restrição alimentar ou pedido especial?"></textarea>
         </div>
         <div class="form-submit">
             <button type="submit" class="btn btn-gold">Confirmar Reserva</button>
@@ -459,6 +520,38 @@
 </footer>
 
 <script>
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('open');
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navLinks.classList.remove('open');
+        });
+    });
+
+    // Menu tab filter
+    const tabs = document.querySelectorAll('.menu-tab');
+    const items = document.querySelectorAll('.menu-item');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            const cat = tab.dataset.cat;
+            items.forEach(item => {
+                item.style.display = item.dataset.cat === cat ? '' : 'none';
+                if (item.dataset.cat === cat) item.style.animation = 'fadeUp 0.4s ease forwards';
+            });
+        });
+    });
+    // Show only "entradas" initially
+    items.forEach(item => { if (item.dataset.cat !== 'entradas') item.style.display = 'none'; });
+
+    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', e => {
             e.preventDefault();
