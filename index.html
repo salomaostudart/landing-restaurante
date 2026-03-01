@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabor & Arte | Restaurante</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #D4A853;
+            --primary-dark: #B8922F;
+            --dark: #1A1410;
+            --dark-2: #241E17;
+            --cream: #FDF6E9;
+            --gray: #A39A8B;
+            --white: #FFFCF5;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(26,20,16,0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212,168,83,0.15);
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+        }
+        .logo small { font-size: 0.65em; font-weight: 400; color: var(--gray); display: block; letter-spacing: 2px; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--gray); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-cta {
+            padding: 0.6rem 1.5rem;
+            background: var(--primary);
+            color: var(--dark);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .nav-cta:hover { background: var(--primary-dark); }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(180deg, var(--dark) 0%, var(--dark-2) 100%);
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(212,168,83,0.08), transparent 70%);
+        }
+        .hero-content { position: relative; max-width: 650px; }
+        .hero-sub {
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.85rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .hero h1 {
+            font-size: 3.8rem;
+            font-weight: 300;
+            line-height: 1.15;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.5px;
+        }
+        .hero h1 strong { font-weight: 700; color: var(--primary); }
+        .hero p { color: var(--gray); font-size: 1.1rem; margin-bottom: 2.5rem; }
+        .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            padding: 0.9rem 2.2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+        }
+        .btn-gold {
+            background: var(--primary);
+            color: var(--dark);
+            box-shadow: 0 4px 20px rgba(212,168,83,0.3);
+        }
+        .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(212,168,83,0.45); }
+        .btn-outline-light {
+            background: transparent;
+            color: var(--white);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .btn-outline-light:hover { border-color: var(--primary); }
+
+        /* ABOUT */
+        .about {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 6rem 2rem;
+            align-items: center;
+        }
+        .about-img {
+            height: 400px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--dark-2), #2a2018);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            border: 1px solid rgba(212,168,83,0.15);
+        }
+        .about-text h2 { font-size: 2rem; margin-bottom: 1rem; font-weight: 300; }
+        .about-text h2 strong { font-weight: 700; color: var(--primary); }
+        .about-text p { color: var(--gray); margin-bottom: 1rem; }
+        .about-stats { display: flex; gap: 2rem; margin-top: 2rem; }
+        .stat { text-align: center; }
+        .stat-num { font-size: 2rem; font-weight: 700; color: var(--primary); }
+        .stat-label { font-size: 0.8rem; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* MENU */
+        .menu-section { padding: 6rem 2rem; background: var(--dark-2); }
+        .section-title { text-align: center; margin-bottom: 3rem; }
+        .section-title h2 { font-size: 2.2rem; font-weight: 300; margin-bottom: 0.5rem; }
+        .section-title h2 strong { font-weight: 700; color: var(--primary); }
+        .section-title p { color: var(--gray); }
+
+        .menu-tabs { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
+        .menu-tab {
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            background: rgba(212,168,83,0.08);
+            color: var(--gray);
+            border: 1px solid rgba(212,168,83,0.15);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .menu-tab.active, .menu-tab:hover {
+            background: var(--primary);
+            color: var(--dark);
+            border-color: var(--primary);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 1.2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(212,168,83,0.08);
+            transition: all 0.3s;
+        }
+        .menu-item:hover { background: rgba(212,168,83,0.04); border-color: rgba(212,168,83,0.2); }
+        .menu-item-info h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+        .menu-item-info p { font-size: 0.85rem; color: var(--gray); }
+        .menu-item-price { color: var(--primary); font-weight: 700; font-size: 1.1rem; white-space: nowrap; margin-left: 1rem; }
+
+        /* GALLERY */
+        .gallery { padding: 6rem 2rem; }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .gallery-item {
+            height: 220px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .gallery-item:hover { transform: scale(1.03); }
+        .g1 { background: linear-gradient(135deg, #2a1a0a, #3a2a1a); }
+        .g2 { background: linear-gradient(135deg, #1a2a0a, #2a3a1a); }
+        .g3 { background: linear-gradient(135deg, #2a0a1a, #3a1a2a); }
+        .g4 { background: linear-gradient(135deg, #0a1a2a, #1a2a3a); }
+
+        /* RESERVATION */
+        .reservation { padding: 6rem 2rem; background: var(--dark-2); }
+        .reservation-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+        .form-group.full { grid-column: 1 / -1; }
+        .form-group label { font-size: 0.85rem; color: var(--gray); }
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(212,168,83,0.2);
+            background: var(--dark);
+            color: var(--white);
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .form-group textarea { resize: vertical; min-height: 80px; }
+        .form-submit {
+            grid-column: 1 / -1;
+            margin-top: 0.5rem;
+        }
+        .form-submit .btn { width: 100%; }
+
+        /* FOOTER */
+        footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(212,168,83,0.1);
+        }
+        .footer-info { color: var(--gray); font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .footer-copy { color: rgba(163,154,139,0.5); font-size: 0.8rem; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .about { grid-template-columns: 1fr; gap: 2rem; }
+            .nav-links, .nav-cta { display: none; }
+            .reservation-form { grid-template-columns: 1fr; }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">Sabor & Arte<small>Gastronomia</small></div>
+    <ul class="nav-links">
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#cardapio">Cardapio</a></li>
+        <li><a href="#galeria">Galeria</a></li>
+        <li><a href="#reserva">Reservas</a></li>
+    </ul>
+    <a href="#reserva" class="nav-cta">Reservar Mesa</a>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <p class="hero-sub">Gastronomia Autoral</p>
+        <h1>Uma experiencia <strong>unica</strong> para o seu paladar</h1>
+        <p>Ingredientes selecionados, receitas autorais e um ambiente acolhedor. Venha viver momentos inesqueciveis.</p>
+        <div class="hero-btns">
+            <a href="#reserva" class="btn btn-gold">Reservar Mesa</a>
+            <a href="#cardapio" class="btn btn-outline-light">Ver Cardapio</a>
+        </div>
+    </div>
+</section>
+
+<section id="sobre">
+    <div class="about">
+        <div class="about-img">&#127858;</div>
+        <div class="about-text">
+            <h2>Uma historia de <strong>paixao</strong> pela gastronomia</h2>
+            <p>Desde 2015, o Sabor & Arte traz o melhor da culinaria contemporanea com raizes brasileiras. Cada prato e cuidadosamente elaborado pelo nosso chef para proporcionar uma experiencia gastronomica memoravel.</p>
+            <p>Nosso compromisso e com ingredientes frescos, fornecedores locais e a busca constante pela excelencia.</p>
+            <div class="about-stats">
+                <div class="stat">
+                    <div class="stat-num">8+</div>
+                    <div class="stat-label">Anos</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">15k+</div>
+                    <div class="stat-label">Clientes</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">4.9</div>
+                    <div class="stat-label">Avaliacao</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="cardapio" class="menu-section">
+    <div class="section-title">
+        <h2>Nosso <strong>Cardapio</strong></h2>
+        <p>Selecao dos pratos mais pedidos</p>
+    </div>
+    <div class="menu-tabs">
+        <div class="menu-tab active">Entradas</div>
+        <div class="menu-tab">Pratos Principais</div>
+        <div class="menu-tab">Sobremesas</div>
+        <div class="menu-tab">Bebidas</div>
+    </div>
+    <div class="menu-grid">
+        <div class="menu-item">
+            <div class="menu-item-info">
+                <h3>Bruschetta Artesanal</h3>
+                <p>Tomate cereja, manjericao fresco e reduccao de balsamico</p>
+            </div>
+            <div class="menu-item-price">R$ 32</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-item-info">
+                <h3>Carpaccio de Mignon</h3>
+                <p>Com rucula, parmesao e molho mostarda e mel</p>
+            </div>
+            <div class="menu-item-price">R$ 45</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-item-info">
+                <h3>Risoto de Funghi</h3>
+                <p>Cogumelos frescos, parmesao e trufa negra</p>
+            </div>
+            <div class="menu-item-price">R$ 68</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-item-info">
+                <h3>File ao Molho de Vinho</h3>
+                <p>Mignon grelhado com reduccao de Malbec e risoto</p>
+            </div>
+            <div class="menu-item-price">R$ 89</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-item-info">
+                <h3>Salmao Grelhado</h3>
+                <p>Com legumes assados e molho de maracuja</p>
+            </div>
+            <div class="menu-item-price">R$ 78</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-item-info">
+                <h3>Petit Gateau</h3>
+                <p>Com sorvete artesanal de baunilha e calda de frutas</p>
+            </div>
+            <div class="menu-item-price">R$ 38</div>
+        </div>
+    </div>
+</section>
+
+<section id="galeria" class="gallery">
+    <div class="section-title">
+        <h2>Nosso <strong>Espaco</strong></h2>
+        <p>Ambiente pensado para cada detalhe da sua experiencia</p>
+    </div>
+    <div class="gallery-grid">
+        <div class="gallery-item g1">&#127860;</div>
+        <div class="gallery-item g2">&#127863;</div>
+        <div class="gallery-item g3">&#127857;</div>
+        <div class="gallery-item g4">&#9749;</div>
+    </div>
+</section>
+
+<section id="reserva" class="reservation">
+    <div class="section-title">
+        <h2>Faca sua <strong>Reserva</strong></h2>
+        <p>Reserve sua mesa e garanta uma experiencia especial</p>
+    </div>
+    <form class="reservation-form" onsubmit="event.preventDefault(); alert('Reserva enviada com sucesso! Entraremos em contato em breve.');">
+        <div class="form-group">
+            <label>Nome completo</label>
+            <input type="text" placeholder="Seu nome" required>
+        </div>
+        <div class="form-group">
+            <label>Telefone</label>
+            <input type="tel" placeholder="(00) 00000-0000" required>
+        </div>
+        <div class="form-group">
+            <label>Data</label>
+            <input type="date" required>
+        </div>
+        <div class="form-group">
+            <label>Horario</label>
+            <select required>
+                <option value="">Selecione</option>
+                <option>18:00</option>
+                <option>19:00</option>
+                <option>20:00</option>
+                <option>21:00</option>
+                <option>22:00</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Numero de pessoas</label>
+            <select required>
+                <option value="">Selecione</option>
+                <option>1 pessoa</option>
+                <option>2 pessoas</option>
+                <option>3 pessoas</option>
+                <option>4 pessoas</option>
+                <option>5+ pessoas</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Ocasiao</label>
+            <select>
+                <option value="">Selecione (opcional)</option>
+                <option>Jantar romantico</option>
+                <option>Aniversario</option>
+                <option>Reuniao de negocios</option>
+                <option>Confraternizacao</option>
+            </select>
+        </div>
+        <div class="form-group full">
+            <label>Observacoes</label>
+            <textarea placeholder="Alguma restricao alimentar ou pedido especial?"></textarea>
+        </div>
+        <div class="form-submit">
+            <button type="submit" class="btn btn-gold">Confirmar Reserva</button>
+        </div>
+    </form>
+</section>
+
+<footer>
+    <p class="footer-info">Rua das Flores, 123 - Centro | Tel: (11) 99999-9999</p>
+    <p class="footer-info">Ter a Dom: 18h as 23h | Seg: Fechado</p>
+    <p class="footer-copy">&copy; 2026 Sabor & Arte Restaurante</p>
+</footer>
+
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            e.preventDefault();
+            document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.style.animation = 'fadeUp 0.6s ease forwards';
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.menu-item, .gallery-item, .about-img, .about-text, .stat').forEach(el => {
+        el.style.opacity = '0';
+        obs.observe(el);
+    });
+</script>
+
+</body>
+</html>
