@@ -159,11 +159,8 @@
         .about-img {
             height: 400px;
             border-radius: 20px;
-            background: linear-gradient(135deg, var(--dark-2), #2a2018);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 6rem;
+            background-size: cover;
+            background-position: center;
             border: 1px solid rgba(212,168,83,0.15);
         }
         .about-text h2 { font-size: 2rem; margin-bottom: 1rem; font-weight: 300; }
@@ -231,10 +228,8 @@
         .gallery-item {
             height: 220px;
             border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
+            background-size: cover;
+            background-position: center;
             transition: all 0.3s;
             cursor: pointer;
         }
@@ -357,7 +352,7 @@
 
 <section id="sobre">
     <div class="about">
-        <div class="about-img">&#127858;</div>
+        <div class="about-img" style="background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=400&fit=crop&auto=format&q=75');"></div>
         <div class="about-text">
             <h2>Uma história de <strong>paixão</strong> pela gastronomia</h2>
             <p>Desde 2015, o Sabor & Arte traz o melhor da culinária contemporânea com raízes brasileiras. Cada prato é cuidadosamente elaborado pelo nosso chef para proporcionar uma experiência gastronômica memorável.</p>
@@ -464,10 +459,10 @@
         <p>Ambiente pensado para cada detalhe da sua experiência</p>
     </div>
     <div class="gallery-grid">
-        <div class="gallery-item g1">&#127860;</div>
-        <div class="gallery-item g2">&#127863;</div>
-        <div class="gallery-item g3">&#127857;</div>
-        <div class="gallery-item g4">&#9749;</div>
+        <div class="gallery-item g1" style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop&auto=format&q=75');"></div>
+        <div class="gallery-item g2" style="background-image: url('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=400&h=300&fit=crop&auto=format&q=75');"></div>
+        <div class="gallery-item g3" style="background-image: url('https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=400&h=300&fit=crop&auto=format&q=75');"></div>
+        <div class="gallery-item g4" style="background-image: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=300&fit=crop&auto=format&q=75');"></div>
     </div>
 </section>
 
