@@ -96,7 +96,9 @@
             justify-content: center;
             text-align: center;
             padding: 2rem;
-            background: linear-gradient(180deg, var(--dark) 0%, var(--dark-2) 100%);
+            background: linear-gradient(180deg, rgba(26,20,16,0.85) 0%, rgba(36,30,23,0.9) 100%), url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&h=800&fit=crop&auto=format&q=75');
+            background-size: cover;
+            background-position: center;
             position: relative;
         }
         .hero::before {
@@ -282,6 +284,14 @@
         .footer-info { color: var(--gray); font-size: 0.9rem; margin-bottom: 0.5rem; }
         .footer-copy { color: rgba(163,154,139,0.5); font-size: 0.8rem; }
 
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .hero h1 { font-size: 2.8rem; }
+            .menu-section, .gallery, .reservation { padding: 4rem 1.5rem; }
+            .about { gap: 2rem; }
+            .nav-links { gap: 1.2rem; }
+            .nav-links a { font-size: 0.8rem; }
+        }
+
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             .about { grid-template-columns: 1fr; gap: 2rem; }
@@ -299,7 +309,7 @@
                 border-bottom: 1px solid rgba(212,168,83,0.15);
             }
             .nav-links.open { display: flex; }
-            .nav-cta { display: none; }
+            .nav-cta { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
             .reservation-form { grid-template-columns: 1fr; }
         }
 
@@ -366,14 +376,14 @@
 
 <section id="sobre">
     <div class="about">
-        <div class="about-img" style="background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=400&fit=crop&auto=format&q=75');"></div>
+        <div class="about-img" role="img" aria-label="Interior do restaurante Sabor & Arte" style="background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=400&fit=crop&auto=format&q=75');"></div>
         <div class="about-text">
             <h2>Uma história de <strong>paixão</strong> pela gastronomia</h2>
             <p>Desde 2015, o Sabor & Arte traz o melhor da culinária contemporânea com raízes brasileiras. Cada prato é cuidadosamente elaborado pelo nosso chef para proporcionar uma experiência gastronômica memorável.</p>
             <p>Nosso compromisso é com ingredientes frescos, fornecedores locais e a busca constante pela excelência.</p>
             <div class="about-stats">
                 <div class="stat">
-                    <div class="stat-num">8+</div>
+                    <div class="stat-num">10+</div>
                     <div class="stat-label">Anos</div>
                 </div>
                 <div class="stat">
@@ -395,7 +405,8 @@
         <p>Seleção dos pratos mais pedidos</p>
     </div>
     <div class="menu-tabs">
-        <div class="menu-tab active" data-cat="entradas">Entradas</div>
+        <div class="menu-tab active" data-cat="todos">Todos</div>
+        <div class="menu-tab" data-cat="entradas">Entradas</div>
         <div class="menu-tab" data-cat="principais">Pratos Principais</div>
         <div class="menu-tab" data-cat="sobremesas">Sobremesas</div>
         <div class="menu-tab" data-cat="bebidas">Bebidas</div>
@@ -473,10 +484,10 @@
         <p>Ambiente pensado para cada detalhe da sua experiência</p>
     </div>
     <div class="gallery-grid">
-        <div class="gallery-item g1" style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop&auto=format&q=75');"></div>
-        <div class="gallery-item g2" style="background-image: url('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=400&h=300&fit=crop&auto=format&q=75');"></div>
-        <div class="gallery-item g3" style="background-image: url('https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=400&h=300&fit=crop&auto=format&q=75');"></div>
-        <div class="gallery-item g4" style="background-image: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=300&fit=crop&auto=format&q=75');"></div>
+        <div class="gallery-item g1" role="img" aria-label="Prato gourmet do chef" style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop&auto=format&q=75');"></div>
+        <div class="gallery-item g2" role="img" aria-label="Taça de vinho selecionado" style="background-image: url('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=400&h=300&fit=crop&auto=format&q=75');"></div>
+        <div class="gallery-item g3" role="img" aria-label="Entrada especial da casa" style="background-image: url('https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=400&h=300&fit=crop&auto=format&q=75');"></div>
+        <div class="gallery-item g4" role="img" aria-label="Café e sobremesa artesanal" style="background-image: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=300&fit=crop&auto=format&q=75');"></div>
     </div>
 </section>
 
@@ -570,13 +581,16 @@
             tab.classList.add('active');
             const cat = tab.dataset.cat;
             items.forEach(item => {
-                item.style.display = item.dataset.cat === cat ? '' : 'none';
-                if (item.dataset.cat === cat) item.style.animation = 'fadeUp 0.4s ease forwards';
+                const show = cat === 'todos' || item.dataset.cat === cat;
+                item.style.display = show ? '' : 'none';
+                if (show) {
+                    item.style.animation = 'none';
+                    item.offsetHeight;
+                    item.style.animation = 'fadeUp 0.4s ease forwards';
+                }
             });
         });
     });
-    // Show only "entradas" initially
-    items.forEach(item => { if (item.dataset.cat !== 'entradas') item.style.display = 'none'; });
 
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(a => {
