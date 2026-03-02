@@ -318,10 +318,23 @@
             font-size: 0.9rem;
         }
         .skip-link:focus { top: 0; }
+        .demo-banner {
+            background: var(--primary);
+            color: var(--dark);
+            text-align: center;
+            padding: 0.4rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 101;
+        }
+        .demo-banner a { color: var(--dark); text-decoration: underline; }
     </style>
 </head>
 <body>
 
+<div class="demo-banner">Projeto demonstrativo — desenvolvido por <a href="https://salomaostudart.github.io/portfolio/" target="_blank">Salomão Studart</a></div>
 <a href="#cardapio" class="skip-link">Pular para o conteúdo</a>
 
 <nav role="navigation" aria-label="Menu principal">
